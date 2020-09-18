@@ -1,0 +1,17 @@
+{
+    "debug": true,
+    
+    "amqpURL":".",
+
+    "consumer":{
+        "exchange":{
+            "name":"test",
+            "type":"fanout",
+            "bindingKey":"",
+            "queName":"test"
+        },
+        "tag":"demo-1"
+    }
+
+  }
+  
