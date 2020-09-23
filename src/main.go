@@ -38,7 +38,7 @@ func main() {
 		return
 	}
 
-	ctx.StartConsumingByHandle(config.Consumer.Tag, func(msg rabbitmq.Message) {
+	ctx.StartConsumingBy(config.Consumer.Tag, func(msg rabbitmq.Message) {
 
 		log.Println(msg.GetBody())
 

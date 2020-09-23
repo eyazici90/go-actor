@@ -4,7 +4,7 @@ import "errors"
 
 type Consumer interface {
 	StartConsuming(consumerTag string) error
-	StartConsumingByHandle(consumerTag string, handle Handle) error
+	StartConsumingBy(consumerTag string, handle Handle) error
 }
 
 func (c *context) StartConsuming(consumerTag string) error {
@@ -35,7 +35,7 @@ func (c *context) StartConsuming(consumerTag string) error {
 	return err
 }
 
-func (c *context) StartConsumingByHandle(consumerTag string, handle Handle) error {
+func (c *context) StartConsumingBy(consumerTag string, handle Handle) error {
 	c.WithHandle(handle)
 	return c.StartConsuming(consumerTag)
 }
