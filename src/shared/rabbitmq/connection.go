@@ -6,10 +6,10 @@ import (
 
 type Connector interface {
 	Connect() (RabbitMqContext, error)
+	UseConnection(connection *amqp.Connection)
 }
 
 func (c *context) Connect() (RabbitMqContext, error) {
-
 	if c.amqpURI == "" {
 		return c, AmqpURICannotBeEmpty
 	}
@@ -31,13 +31,8 @@ func (c *context) Connect() (RabbitMqContext, error) {
 	return c, err
 }
 
-func returnOnErr(actions ...func() error) error {
-	for _, act := range actions {
-		if e := act(); e != nil {
-			return e
-		}
-	}
-	return nil
+func (c *context) UseConnection(connection *amqp.Connection) {
+	c.conn = connection
 }
 
 func (c *context) openChannel() error {
