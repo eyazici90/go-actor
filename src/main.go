@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/eyazici90/go-msgify"
 	"github.com/spf13/viper"
 
 	"go-projection/application"
-	"go-projection/shared/rabbitmq"
 )
 
 var config application.AppConfig
@@ -25,7 +25,7 @@ func init() {
 
 func main() {
 
-	ctx, err := rabbitmq.NewContext(config.AmqpURL).
+	ctx, err := msgify.NewContext(config.AmqpURL).
 		WithExchange(config.Consumer.Exchange.Name, config.Consumer.Exchange.Type).
 		WithQueue(config.Consumer.Exchange.QueName, config.Consumer.Exchange.BindingKey).
 		Connect()
@@ -35,7 +35,7 @@ func main() {
 		return
 	}
 
-	ctx.StartConsumingBy(config.Consumer.Tag, func(msg rabbitmq.Message) {
+	ctx.StartConsumingBy(config.Consumer.Tag, func(msg msgify.Message) {
 
 		log.Println(msg.GetBody())
 
