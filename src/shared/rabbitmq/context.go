@@ -16,19 +16,6 @@ type context struct {
 	handler      Handle
 }
 
-type ContextBuilder interface {
-	WithExchange(name, exchangeType string) RabbitMqContext
-	WithQueue(queueName, key string) RabbitMqContext
-	WithHandle(handle Handle) RabbitMqContext
-}
-
-type RabbitMqContext interface {
-	ContextBuilder
-	Connector
-	Publisher
-	Consumer
-}
-
 func NewContext(amqpURI string) RabbitMqContext {
 	return &context{
 		conn:    nil,

@@ -6,10 +6,6 @@ import (
 	"github.com/streadway/amqp"
 )
 
-type Publisher interface {
-	Publish(message Message) error
-}
-
 func (c *context) Publish(msg Message) error {
 	if c.channel == nil {
 		return NoChannelFound

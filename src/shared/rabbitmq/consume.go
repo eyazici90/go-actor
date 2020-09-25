@@ -2,11 +2,6 @@ package rabbitmq
 
 import "errors"
 
-type Consumer interface {
-	StartConsuming(consumerTag string) error
-	StartConsumingBy(consumerTag string, handle Handle) error
-}
-
 func (c *context) StartConsuming(consumerTag string) error {
 	if c.channel == nil {
 		return errors.New("No channel found. Please connect to exchange first!")

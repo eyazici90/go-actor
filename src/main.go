@@ -15,15 +15,12 @@ var config application.AppConfig
 
 func init() {
 	viper.SetConfigFile(`config.json`)
-	err := viper.ReadInConfig()
-	if err != nil {
-		panic(err)
-	}
-	err = viper.Unmarshal(&config)
 
-	if err != nil {
-		panic(err)
-	}
+	must(viper.ReadInConfig)
+
+	must(func() error {
+		return viper.Unmarshal(&config)
+	})
 }
 
 func main() {
@@ -65,6 +62,13 @@ func handleMsg(msgType string, bytes []byte) {
 		_ = json.Unmarshal(bytes, event)
 
 		application.Send(event.ID, *event)
+	}
+}
+
+func must(action func() error) {
+	err := action()
+	if err != nil {
+		panic(err)
 	}
 }
 
